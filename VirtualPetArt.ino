@@ -1,3 +1,4 @@
+//pixel data for right ear
 byte ear1[8] = {
   B00000,
   B00000,
@@ -9,6 +10,7 @@ byte ear1[8] = {
   B00011,
 };
 
+//left ear
 byte ear2[8] = {
   B00000,
   B00000,
@@ -20,6 +22,7 @@ byte ear2[8] = {
   B11000,
 };
 
+//smiling facial expression
 byte smile[8] = {
   B00000,
   B00000,
@@ -31,6 +34,7 @@ byte smile[8] = {
   B00000,
 };
 
+//grinning facial expression
 byte grin[8] = {
   B00000,
   B00000,
@@ -42,6 +46,7 @@ byte grin[8] = {
   B00000,
 };
 
+//frowning facial expression
 byte frown[8] = {
   B00000,
   B00000,
@@ -64,6 +69,7 @@ byte poo[8] = {
   B11111,
 };
 
+//water droplet used for 'bath' animation
 byte water[8] = {
   B00000,
   B00100,
@@ -75,6 +81,7 @@ byte water[8] = {
   B00000,
 };
 
+//chicken drumstick used for 'feed' animation
 byte chicken[8] = {
   B01110,
   B11111,
@@ -132,13 +139,14 @@ void drawEating() {
   for(int i = 0; i < 3; i++) {
     drawPet(5);
     drawChicken();
-    eatingTone();
+    playSound(eatingTone,thirtySecondNotes);
+    //eatingTone();
     
     delay(450);
 
     drawPet(2);
     drawChicken();
-    eatingTone();
+    playSound(eatingTone,thirtySecondNotes);
     delay(450);
   }
   drawPet(3);
@@ -158,12 +166,14 @@ void drawBathing() {
   for(int i = 0; i < 2; i++) {
     lcd.setCursor(6,0);
     lcd.write(byte(6));
-    bathingTone();
+    playSound(bathTone,thirtySecondNotes);
+    //bathingTone();
     delay(400);
 
     lcd.setCursor(10,1);
     lcd.write(byte(6));
-    bathingTone();
+    playSound(bathTone,thirtySecondNotes);
+    //bathingTone();
     delay(400);
 
     lcd.setCursor(6,0);
@@ -174,12 +184,12 @@ void drawBathing() {
     
     lcd.setCursor(10,0);
     lcd.write(byte(6));
-    bathingTone();
+    playSound(bathTone,thirtySecondNotes);
     delay(400);
     
     lcd.setCursor(6,1);
     lcd.write(byte(6));
-    bathingTone();
+    playSound(bathTone,thirtySecondNotes);
     delay(400);
 
     lcd.setCursor(10,0);
@@ -195,7 +205,7 @@ void drawBathing() {
   lcd.clear();
   pooped = false;
   drawPet(3);
-  bathDoneTone();
+  playSound(bathDoneTone,eighthNotes);
 
   lcd.setCursor(10,0);
   lcd.print((char)235);

@@ -1,3 +1,6 @@
+/* When the menu button is pressed once, display the
+ *  first menu screen containing usage instructions
+ */
 void menuStart() {
   lcd.clear();
   lcd.setCursor(0,0);
@@ -14,6 +17,32 @@ void menuStart() {
   }
 }
 
+/*
+void menuOptions() {
+  switch(menuPresses) {
+    case 1:
+    menuStart();
+    break;
+    case 2:
+    feed();
+    break;
+    case 3:
+    rest();
+    break;
+    case 4:
+    bath();
+    break;
+    case 5:
+    exitMenu();
+    break;
+    case 6:
+    menuPresses = 2; //circle back to first menu option
+    break;
+  }
+  
+}
+*/
+
 void feed() {  
   lcd.clear();
   lcd.print(" o Feed     Bath");
@@ -23,7 +52,8 @@ void feed() {
   while(menuPresses == 2) {
     menuState = digitalRead(menuPin);
     if(menuState == LOW) { 
-      pressButtonTone();
+      //pressButtonTone();
+      playSound(buttonPressTone,thirtySecondNotes);
       menuPresses++;
       delay(200);
       break;
@@ -45,7 +75,7 @@ void rest() {
   while(menuPresses == 3) {
     menuState = digitalRead(menuPin);
     if(menuState == LOW) {
-      pressButtonTone(); 
+      playSound(buttonPressTone,thirtySecondNotes); 
       menuPresses++;
       delay(200);
       break;
@@ -69,7 +99,7 @@ void bath() {
   while(menuPresses == 4) {
     menuState = digitalRead(menuPin);
     if(menuState == LOW) {
-      pressButtonTone();
+      playSound(buttonPressTone,thirtySecondNotes);
       menuPresses++;
       delay(200);
       break;
@@ -99,7 +129,7 @@ void exitMenu() {
       }
       menuState = digitalRead(menuPin);
       if(menuState == LOW) {
-        pressButtonTone();
+        playSound(buttonPressTone,thirtySecondNotes);
         menuPresses++;
         delay(200);
       }
