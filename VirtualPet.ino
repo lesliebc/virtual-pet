@@ -35,7 +35,6 @@ void setup() {
   pinMode(menuPin,INPUT_PULLUP);
   pinMode(12,INPUT_PULLUP);
   lcd.begin(16,2);
-
 /*
   //startup screen
   lcd.clear();
@@ -49,41 +48,61 @@ void setup() {
 */
   drawPet(2); //smile
   playSound(welcomeTone,eighthNotes);
-  //welcomeTone();
 }
 
 void loop() { 
   menuState = digitalRead(menuPin);
+  selectState = digitalRead(selectPin);
     
   if(menuState == LOW) {
     menuPresses++;
+    playSound(buttonPressTone,thirtySecondNotes);
     onHomeScreen = false;
     delay(250);
   }
-
-  if(onHomeScreen) { pet_movements(); }
   
-  //event handling for menu button presses
   switch(menuPresses) {
     case 1:
     menuStart();
     break;
     case 2:
-    feed();
+    menuOptions();
     break;
     case 3:
-    rest();
+    //feed
+    lcd.setCursor(10,1);
+    lcd.print(" ");
+    lcd.setCursor(1,0);
+    lcd.print("o");
+    if(selectState == LOW) { feed(); }
     break;
     case 4:
-    bath();
+    lcd.setCursor(1,0);
+    lcd.print(" ");
+    lcd.setCursor(1,1);
+    lcd.print("o");
+    if(selectState == LOW) { rest(); }
     break;
     case 5:
-    exitMenu();
+    lcd.setCursor(1,1);
+    lcd.print(" ");
+    lcd.setCursor(10,0);
+    lcd.print("o");
+    if(selectState == LOW) { bath(); }
     break;
     case 6:
-    menuPresses = 2; //circle back to first menu option
+    lcd.setCursor(10,0);
+    lcd.print(" ");
+    lcd.setCursor(10,1);
+    lcd.print("o");
+    if(selectState == LOW) { exitMenu(); }
+    break;
+    case 7:
+    menuPresses = 3; //circle back to first menu option
     break;
   }
+
+  if(onHomeScreen) { pet_movements(); }
 }
 
 void pet_movements() {
@@ -105,7 +124,6 @@ void pet_movements() {
     drawPoop();
     pooped = true;
     playSound(poopTone,quarterAndEighthNotes);
-    //poopAlertTone();
   }
 }
 

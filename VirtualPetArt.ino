@@ -140,7 +140,6 @@ void drawEating() {
     drawPet(5);
     drawChicken();
     playSound(eatingTone,thirtySecondNotes);
-    //eatingTone();
     
     delay(450);
 
@@ -159,21 +158,16 @@ void drawEating() {
 
 void drawBathing() {
   lcd.createChar(6,water);
-
-  drawPet(2);
-  if(pooped) { drawPoop(); }
   
   for(int i = 0; i < 2; i++) {
     lcd.setCursor(6,0);
     lcd.write(byte(6));
     playSound(bathTone,thirtySecondNotes);
-    //bathingTone();
     delay(400);
 
     lcd.setCursor(10,1);
     lcd.write(byte(6));
     playSound(bathTone,thirtySecondNotes);
-    //bathingTone();
     delay(400);
 
     lcd.setCursor(6,0);
