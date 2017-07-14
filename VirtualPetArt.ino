@@ -132,10 +132,21 @@ void drawPoop() {
   lcd.write(byte(5));
 }
 
+void drawWater(int lcdRow, int lcdCol) {
+  lcd.createChar(6,water);
+  lcd.setCursor(lcdRow,lcdCol);
+  lcd.write(byte(6));
+}
+
 void drawChicken() {
   lcd.createChar(7,chicken);
   lcd.setCursor(11,1);
   lcd.write(byte(7));
+}
+
+void drawSparkle(int lcdRow, int lcdCol) {
+  lcd.setCursor(lcdRow,lcdCol);
+  lcd.print((char)235);
 }
 
 void drawEating() { 
@@ -156,56 +167,46 @@ void drawEating() {
 }
 
 void drawBathing() {
-  lcd.createChar(6,water);
-  
   for(int i = 0; i < 2; i++) {
-    lcd.setCursor(6,0);
-    lcd.write(byte(6));
+    drawWater(6,0);
     playSound(bathTone,thirtySecondNotes);
     delay(400);
 
-    lcd.setCursor(10,1);
-    lcd.write(byte(6));
+    drawWater(10,1);
     playSound(bathTone,thirtySecondNotes);
     delay(400);
 
-    lcd.setCursor(6,0);
-    lcd.print(" ");
-
-    lcd.setCursor(10,1);
-    lcd.print(" ");
+    clearGlyph(6,0);
     
-    lcd.setCursor(10,0);
-    lcd.write(byte(6));
+    clearGlyph(10,1);
+    
+    drawWater(10,0);
     playSound(bathTone,thirtySecondNotes);
     delay(400);
     
-    lcd.setCursor(6,1);
-    lcd.write(byte(6));
+    drawWater(6,1);
     playSound(bathTone,thirtySecondNotes);
     delay(400);
 
-    lcd.setCursor(10,0);
-    lcd.print(" ");
+    clearGlyph(10,0);
 
-    lcd.setCursor(6,1);
-    lcd.print(" ");
+    clearGlyph(6,1);
   }
-  lcd.setCursor(12,1);
-  lcd.print(" ");
-
+  
+  if(pooped) {
+    //remove the poop pile from the screen
+    clearGlyph(12,1);
+    pooped = false;
+  }
+    
   delay(300);
   lcd.clear();
-  pooped = false;
   drawPet(3);
   playSound(bathDoneTone,eighthNotes);
 
-  lcd.setCursor(10,0);
-  lcd.print((char)235);
-  lcd.setCursor(6,1);
-  lcd.print((char)235);
-  lcd.setCursor(12,1);
-  lcd.print((char)235);
+  drawSparkle(10,0);
+  drawSparkle(6,1);
+  drawSparkle(12,1);
 }
 
 void drawSleeping() {
@@ -213,4 +214,9 @@ void drawSleeping() {
   lcd.setCursor(11,0);
   lcd.print("zzZ");
   drawEars(7,1);
+}
+
+void clearGlyph(int lcdRow, int lcdCol) {
+  lcd.setCursor(lcdRow,lcdCol);
+  lcd.print(" ");
 }

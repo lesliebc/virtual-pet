@@ -18,9 +18,8 @@ int thirtySecondNotes[] = { 32, 32, 32, 32 };
 int poopTone[] = { NOTE_B0, NOTE_A3, NOTE_B0, NOTE_B0 };
 int quarterAndEighthNotes[] = { 4, 8, 8, 4 };
 
-//flags
-int pooped = false; //keep track of buddy's waste of course
-int onHomeScreen = true; //true since this is the default view
+int pooped = false;
+int onHomeScreen = true;
 
 int menuState = HIGH; //the state of the left button, used for toggling menu options
 int selectState = HIGH; //the state of the right button, used for selecting menu options

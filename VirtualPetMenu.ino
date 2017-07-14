@@ -1,6 +1,5 @@
 void showMenuIntro() {
   lcd.clear();
-  lcd.setCursor(0,0);
   lcd.print("PET CARE MENU");
   lcd.setCursor(0,1);
   lcd.print("Push to continue");
