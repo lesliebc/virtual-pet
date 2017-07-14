@@ -23,5 +23,4 @@ void snoringTone() {
     delay(2000);
   }
   noTone(piezoPin);
-  delay(4000);
 }

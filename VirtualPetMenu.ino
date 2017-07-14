@@ -1,7 +1,4 @@
-/* When the menu button is pressed once, display the
- *  first menu screen containing usage instructions
- */
-void menuStart() {
+void showMenuIntro() {
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("PET CARE MENU");
@@ -18,7 +15,7 @@ void menuStart() {
   }
 }
 
-void menuOptions() {
+void showMenuOptions() {
   lcd.print("   Feed     Bath");
   lcd.setCursor(0,1);
   lcd.print("   Rest     Exit");
@@ -28,13 +25,15 @@ void feed() {
   drawPet(2);
   drawChicken();
   drawEating();
+  delay(2500);
   lcd.clear();
-  menuOptions();
+  showMenuOptions();
 }
 
 void rest() {
   drawSleeping();
   snoringTone();
+  delay(4500);
   exitMenu();
 }
 
@@ -42,8 +41,9 @@ void bath() {
   drawPet(2);
   if(pooped) { drawPoop(); }
   drawBathing();
+  delay(2500);
   lcd.clear();
-  menuOptions();
+  showMenuOptions();
 }
 
 void exitMenu() {

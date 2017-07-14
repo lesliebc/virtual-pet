@@ -1,4 +1,5 @@
-//pixel data for right ear
+//pixel data for custom glyphs used in animations
+//right ear
 byte ear1[8] = {
   B00000,
   B00000,
@@ -95,30 +96,32 @@ byte chicken[8] = {
 
 void drawPet(int expression) {
   lcd.clear();
+  drawEars(7,0);
+  drawFace(expression);
+}
+
+void drawEars(int lcdRow,int lcdCol) {
   lcd.createChar(0,ear1);
   lcd.createChar(1,ear2);
+  
+  lcd.setCursor(lcdRow,lcdCol);
+  lcd.write(byte(0));
+  lcd.print("_"); 
+  lcd.write(byte(1));
+}
+
+void drawFace(int expression) {
   lcd.createChar(2,smile);
   lcd.createChar(3,grin);
   lcd.createChar(4,frown);
- 
-  //ears
-  lcd.setCursor(7,0);
-  lcd.write(byte(0));
-  lcd.setCursor(9,0);
-  lcd.write(byte(1));
-
-  //head
-  lcd.setCursor(8,0);
-  lcd.print("_");
-
-  //face
+  
   lcd.setCursor(7,1);
   lcd.print("(");
   lcd.setCursor(8,1);
   if(expression == 5) { 
     lcd.print((char)239); //use ö for facial expression 
   }
-  lcd.write(byte(expression)); //facial expression
+  lcd.write(byte(expression));
   lcd.setCursor(9,1);
   lcd.print(")");
 }
@@ -140,7 +143,6 @@ void drawEating() {
     drawPet(5);
     drawChicken();
     playSound(eatingTone,thirtySecondNotes);
-    
     delay(450);
 
     drawPet(2);
@@ -151,9 +153,6 @@ void drawEating() {
   drawPet(3);
   lcd.setCursor(11,1);
   lcd.print((char)222);
-  
-  delay(2500);
-  loop();
 }
 
 void drawBathing() {
@@ -207,19 +206,11 @@ void drawBathing() {
   lcd.print((char)235);
   lcd.setCursor(12,1);
   lcd.print((char)235);
-  
-  delay(2500);
-  loop();
 }
 
 void drawSleeping() {
   lcd.clear();
   lcd.setCursor(11,0);
   lcd.print("zzZ");
-  lcd.setCursor(7,1);
-  lcd.write(byte(0));
-  lcd.setCursor(9,1);
-  lcd.write(byte(1));
-  lcd.setCursor(8,1);
-  lcd.print("_");
+  drawEars(7,1);
 }

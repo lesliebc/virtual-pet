@@ -35,17 +35,6 @@ void setup() {
   pinMode(menuPin,INPUT_PULLUP);
   pinMode(12,INPUT_PULLUP);
   lcd.begin(16,2);
-/*
-  //startup screen
-  lcd.clear();
-  delay(1000);
-  lcd.setCursor(0,0);
-  lcd.print("VIRTUAL PET");
-  lcd.setCursor(0,1);
-  delay(2500);
-  lcd.print("by Leslie Cheung");
-  delay(2000);
-*/
   drawPet(2); //smile
   playSound(welcomeTone,eighthNotes);
 }
@@ -63,13 +52,13 @@ void loop() {
   
   switch(menuPresses) {
     case 1:
-    menuStart();
+    lcd.clear();
+    showMenuIntro();
     break;
     case 2:
-    menuOptions();
+    showMenuOptions();
     break;
     case 3:
-    //feed
     lcd.setCursor(10,1);
     lcd.print(" ");
     lcd.setCursor(1,0);
@@ -119,11 +108,10 @@ void pet_movements() {
     }
     else { count = 0; }
   }
-  if(currentTime % 10000 == 0 && !pooped) {
+  if(currentTime % 30000 == 0 && !pooped) {
     drawPet(4); //change mood to frown
     drawPoop();
     pooped = true;
     playSound(poopTone,quarterAndEighthNotes);
   }
 }
-
