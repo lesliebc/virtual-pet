@@ -18,10 +18,10 @@ void timePetMovements(unsigned long currentTime) {
 }
 
 void timePetPooping(unsigned long currentTime) {
-  if(currentTime % 30000 == 0 && !pooped) {
+  if(currentTime % 30000 == 0 && !petHasPooped) {
     drawPet(FROWNING);
     drawPoop();
-    pooped = true;
+    petHasPooped = true;
     playSound(poopTone,quarterAndEighthNotes);
   }
 }

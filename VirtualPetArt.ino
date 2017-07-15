@@ -1,6 +1,5 @@
-//pixel data for custom glyphs used in animations
-//right ear
-byte ear1[8] = {
+// -------------- PIXEL DATA FOR CUSTOM CHARS ----------------
+byte rightEar[8] = {
   B00000,
   B00000,
   B00000,
@@ -11,8 +10,7 @@ byte ear1[8] = {
   B00011,
 };
 
-//left ear
-byte ear2[8] = {
+byte leftEar[8] = {
   B00000,
   B00000,
   B00000,
@@ -23,7 +21,6 @@ byte ear2[8] = {
   B11000,
 };
 
-//smiling facial expression
 byte smile[8] = {
   B00000,
   B00000,
@@ -35,7 +32,6 @@ byte smile[8] = {
   B00000,
 };
 
-//grinning facial expression
 byte grin[8] = {
   B00000,
   B00000,
@@ -47,7 +43,6 @@ byte grin[8] = {
   B00000,
 };
 
-//frowning facial expression
 byte frown[8] = {
   B00000,
   B00000,
@@ -70,7 +65,6 @@ byte poo[8] = {
   B11111,
 };
 
-//water droplet used for 'bath' animation
 byte water[8] = {
   B00000,
   B00100,
@@ -82,7 +76,6 @@ byte water[8] = {
   B00000,
 };
 
-//chicken drumstick used for 'feed' animation
 byte chicken[8] = {
   B01110,
   B11111,
@@ -94,20 +87,22 @@ byte chicken[8] = {
   B10100,
 };
 
+// -----------------------------------------------------------
+
 void drawPet(int expression) {
   lcd.clear();
-  drawEars(7,0);
+  drawEarsAt(7,0);
   drawFace(expression);
 }
 
-void drawEars(int lcdRow,int lcdCol) {
-  lcd.createChar(0,ear1);
-  lcd.createChar(1,ear2);
+void drawEarsAt(int lcdRow,int lcdCol) {
+  lcd.createChar(0,rightEar);
+  lcd.createChar(1,leftEar);
   
   lcd.setCursor(lcdRow,lcdCol);
-  lcd.write(byte(0));
+  lcd.write(byte(RIGHT_EAR));
   lcd.print("_"); 
-  lcd.write(byte(1));
+  lcd.write(byte(LEFT_EAR));
 }
 
 void drawFace(int expression) {
@@ -118,7 +113,7 @@ void drawFace(int expression) {
   lcd.setCursor(7,1);
   lcd.print("(");
   lcd.setCursor(8,1);
-  if(expression == 5) { 
+  if(expression == OPEN_MOUTH) { 
     lcd.print((char)239); //use ö for facial expression 
   }
   lcd.write(byte(expression));
@@ -129,94 +124,83 @@ void drawFace(int expression) {
 void drawPoop() {
   lcd.createChar(5,poo);
   lcd.setCursor(12,1);
-  lcd.write(byte(5));
+  lcd.write(byte(POOP));
 }
 
-void drawWater(int lcdRow, int lcdCol) {
+void drawWaterAt(int lcdRow, int lcdCol) {
   lcd.createChar(6,water);
   lcd.setCursor(lcdRow,lcdCol);
-  lcd.write(byte(6));
+  lcd.write(byte(WATER));
+  playSound(bathTone,thirtySecondNotes);
+  delay(400);
 }
 
 void drawChicken() {
   lcd.createChar(7,chicken);
   lcd.setCursor(11,1);
-  lcd.write(byte(7));
+  lcd.write(byte(CHICKEN));
 }
 
-void drawSparkle(int lcdRow, int lcdCol) {
+void drawSparkleAt(int lcdRow, int lcdCol) {
   lcd.setCursor(lcdRow,lcdCol);
   lcd.print((char)235);
 }
 
 void drawEating() { 
   for(int i = 0; i < 3; i++) {
-    drawPet(5);
+    drawPet(OPEN_MOUTH);
     drawChicken();
     playSound(eatingTone,thirtySecondNotes);
     delay(450);
 
-    drawPet(2);
+    drawPet(SMILING);
     drawChicken();
     playSound(eatingTone,thirtySecondNotes);
     delay(450);
   }
-  drawPet(3);
+  drawPet(GRINNING);
   lcd.setCursor(11,1);
   lcd.print((char)222);
 }
 
 void drawBathing() {
   for(int i = 0; i < 2; i++) {
-    drawWater(6,0);
-    playSound(bathTone,thirtySecondNotes);
-    delay(400);
-
-    drawWater(10,1);
-    playSound(bathTone,thirtySecondNotes);
-    delay(400);
-
-    clearGlyph(6,0);
+    drawWaterAt(6,0);
+    drawWaterAt(10,1);
     
-    clearGlyph(10,1);
+    clearCharAt(6,0);    
+    clearCharAt(10,1);
     
-    drawWater(10,0);
-    playSound(bathTone,thirtySecondNotes);
-    delay(400);
-    
-    drawWater(6,1);
-    playSound(bathTone,thirtySecondNotes);
-    delay(400);
+    drawWaterAt(10,0);    
+    drawWaterAt(6,1);
 
-    clearGlyph(10,0);
-
-    clearGlyph(6,1);
+    clearCharAt(10,0);
+    clearCharAt(6,1);
   }
   
-  if(pooped) {
+  if(petHasPooped) {
     //remove the poop pile from the screen
-    clearGlyph(12,1);
-    pooped = false;
+    clearCharAt(12,1);
+    petHasPooped = false;
   }
     
   delay(300);
-  lcd.clear();
-  drawPet(3);
+  drawPet(GRINNING);
   playSound(bathDoneTone,eighthNotes);
 
-  drawSparkle(10,0);
-  drawSparkle(6,1);
-  drawSparkle(12,1);
+  drawSparkleAt(10,0);
+  drawSparkleAt(6,1);
+  drawSparkleAt(12,1);
 }
 
 void drawSleeping() {
   lcd.clear();
   lcd.setCursor(11,0);
   lcd.print("zzZ");
-  drawEars(7,1);
+  drawEarsAt(7,1);
 }
 
-void clearGlyph(int lcdRow, int lcdCol) {
+void clearCharAt(int lcdRow, int lcdCol) {
   lcd.setCursor(lcdRow,lcdCol);
   lcd.print(" ");
 }

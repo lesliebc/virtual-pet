@@ -1,3 +1,50 @@
+void menuButtonPress() {
+  playSound(buttonPressTone,thirtySecondNotes);
+  if(onHomeScreen) { onHomeScreen = false; }
+}
+
+void navigateMenu() {
+  switch(menuPresses) {
+    case 1:
+    showMenuIntro();
+    break;
+    
+    case 2:
+    showMenuOptions();
+    clearCharAt(10,1); // remove previous menu pointer
+    setPointerTo(1,0); // set the pointer here instead
+    if(selectState == LOW) { feed(); }
+    break;
+    
+    case 3:
+    clearCharAt(1,0);
+    setPointerTo(1,1);
+    if(selectState == LOW) { rest(); }
+    break;
+    
+    case 4:
+    clearCharAt(1,1);
+    setPointerTo(10,0);
+    if(selectState == LOW) { bath(); }
+    break;
+    
+    case 5:
+    clearCharAt(10,0);
+    setPointerTo(10,1);
+    if(selectState == LOW) { exitMenu(); }
+    break;
+    
+    case 6:
+    menuPresses = 2; // circle back to first menu option
+    break;
+  }
+}
+
+void setPointerTo(int lcdRow, int lcdCol) {
+  lcd.setCursor(lcdRow,lcdCol);
+  lcd.print("o");
+}
+
 void showMenuIntro() {
   lcd.clear();
   lcd.print("PET CARE MENU");
@@ -15,13 +62,14 @@ void showMenuIntro() {
 }
 
 void showMenuOptions() {
-  lcd.print("   Feed     Bath");
-  lcd.setCursor(0,1);
-  lcd.print("   Rest     Exit");
+  lcd.setCursor(3,0);
+  lcd.print("Feed     Bath");
+  lcd.setCursor(3,1);
+  lcd.print("Rest     Exit");
 }
 
 void feed() {  
-  drawPet(2);
+  drawPet(SMILING);
   drawChicken();
   drawEating();
   delay(2500);
@@ -37,8 +85,8 @@ void rest() {
 }
 
 void bath() {
-  drawPet(2);
-  if(pooped) { drawPoop(); }
+  drawPet(SMILING);
+  if(petHasPooped) { drawPoop(); }
   drawBathing();
   delay(2500);
   lcd.clear();
@@ -46,11 +94,11 @@ void bath() {
 }
 
 void exitMenu() {
-  if(pooped) {
-    drawPet(4);
+  if(petHasPooped) {
+    drawPet(FROWNING);
     drawPoop();
   }
-  else { drawPet(2); }
+  else { drawPet(SMILING); }
   menuPresses = 0;
   onHomeScreen = true;
 }
