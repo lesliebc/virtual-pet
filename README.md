@@ -1,4 +1,4 @@
-<h2>About VirtualPet</h2>
+<h2>About VirtualPet <img src="https://github.com/anthraxcat/VirtualPet/blob/master/Images/pet.png?raw=true" height="28"> </h2>
 
 A throwback to the classic 90s toy, this project is a nostalgic digital pet simulation created with Arduino. You can feed and bathe the pet, or have it take a nap. Click on the image below for a video demo!
 
