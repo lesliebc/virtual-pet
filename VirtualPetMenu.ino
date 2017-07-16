@@ -3,7 +3,7 @@ void menuButtonPress() {
   if(onHomeScreen) { onHomeScreen = false; }
 }
 
-void navigateMenu() {
+void menuButtonListener() {
   switch(menuPresses) {
     case 1:
     showMenuIntro();
@@ -79,7 +79,7 @@ void feed() {
 
 void rest() {
   drawSleeping();
-  snoringTone();
+  playSound(snoring,wholeNotes);
   delay(4500);
   exitMenu();
 }

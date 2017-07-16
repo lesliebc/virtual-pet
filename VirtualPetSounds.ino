@@ -16,11 +16,3 @@ void playSound(int melody[], int noteDurations[]) {
     noTone(piezoPin);
   }  
 }
-
-void snoringTone() {
-  for(int i = 0; i < 3; i++) {
-    tone(piezoPin, NOTE_B0, 1000);
-    delay(2000);
-  }
-  noTone(piezoPin);
-}

@@ -40,6 +40,9 @@ int thirtySecondNotes[] = { 32, 32, 32, 32 };
 int poopTone[] = { NOTE_B0, NOTE_A3, NOTE_B0, NOTE_B0 };
 int quarterAndEighthNotes[] = { 4, 8, 8, 4 };
 
+int snoring[] = { NOTE_B0, 0, NOTE_B0, 0 };
+int wholeNotes[] = { 1, 1, 1, 1 };
+
 // -----------------------------------------------------------
 
 
@@ -62,7 +65,7 @@ void loop() {
     menuButtonPress();
   }
 
-  navigateMenu();
+  menuButtonListener();
  
   if(onHomeScreen) { 
     timePetMovements(currentTime);
